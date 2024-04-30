@@ -33,6 +33,14 @@ apt-get install redis nginx python3-venv npm
 Create a new user.
 Switch to the user and clone the repositories (frontend,api,worker).
 
+```
+adduser mmisp
+sudo -iu mmisp
+git clone https://github.com/Modern-MISP/worker.git
+git clone https://github.com/Modern-MISP/frontend.git
+git clone https://github.com/Modern-MISP/api.git
+```
+
 #### Worker setup
 
 As User, cd into your checkout.
