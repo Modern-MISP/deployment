@@ -212,3 +212,31 @@ systemctl daemon-reload
 systemctl start mmisp-api mmisp-worker
 systemctl reload nginx
 ```
+
+## Using Modern MISP Frontend with MISP API
+
+You need to tweak some settings for cors to work. Alter your `/etc/apache/sites-available/misp-ssl.conf` to include the following
+settings inside the virutal host file:
+
+```
+Header unset Access-Control-Allow-Origin
+Header unset Access-Control-Allow-Methods
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Headers "Authorization, Content-Type"
+Header always set Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE"
+Header always set Access-Control-Expose-Headers "Content-Security-Policy, Location"
+Header always set Access-Control-Max-Age "600"
+
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]
+```
+
+Change some settings in the MISP Database:
+
+```
+sudo -u www-data /var/www/MISP/app/Console/cake Admin setSetting Security.allow_cors true
+sudo -u www-data /var/www/MISP/app/Console/cake Admin setSetting Security.cors_origins '*'
+sudo -u www-data /var/www/MISP/app/Console/cake Admin setSetting Plugin.Workflow_enable true
+sudo -u www-data /var/www/MISP/app/Console/cake Admin setSetting Security.check_sec_fetch_site_header false
+```
