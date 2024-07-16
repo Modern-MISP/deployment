@@ -66,6 +66,7 @@ TimeoutStopSec=70
 Environment=MMISP_API_KEY=random string
 Environment=MMISP_API_PORT=8001
 Environment=MMISP_API_HOST=127.0.0.1
+Environment=PATH=<path to checkout>/.venv/bin
 WorkingDirectory=<path to checkout>
 ExecStart=<path to checkout>/.venv/bin/mmisp-worker
 Type=simple
